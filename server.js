@@ -44,6 +44,15 @@ app.post("/", (req, res) => {
     // 이곳에 코드를 작성하세요.
     // 2. 응답으로 accessToken을 클라이언트로 전송하세요. (res.send 사용)
     // 이곳에 코드를 작성하세요.
+    const accessToken = jwt.sign(
+      {
+        userId: userInfo.user_id,
+      },
+      secretKey,
+      { expiresIn: 1000 * 60 * 10 }
+    );
+    res.clearCookie("accessToken", accessToken);
+    res.send("토근 생성 완료");
   }
 });
 
