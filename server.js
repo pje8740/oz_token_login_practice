@@ -62,6 +62,8 @@ app.get("/", (req, res) => {
   // 이곳에 코드를 작성하세요.
   // 4. 검증이 완료되면 유저정보를 클라이언트로 전송하세요.(res.send 사용)
   // 이곳에 코드를 작성하세요.
+  const { accessToken } = req.cookies;
+  console.log(jwt.verify(accessToken, secretKey));
 });
 
 app.listen(3000, () => console.log("서버 실행!"));
