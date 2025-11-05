@@ -51,8 +51,7 @@ app.post("/", (req, res) => {
       secretKey,
       { expiresIn: 1000 * 60 * 10 }
     );
-    res.clearCookie("accessToken", accessToken);
-    res.send("토근 생성 완료");
+    res.send(accessToken);
   }
 });
 
@@ -62,8 +61,11 @@ app.get("/", (req, res) => {
   // 이곳에 코드를 작성하세요.
   // 4. 검증이 완료되면 유저정보를 클라이언트로 전송하세요.(res.send 사용)
   // 이곳에 코드를 작성하세요.
-  const { accessToken } = req.cookies;
-  console.log(jwt.verify(accessToken, secretKey));
+  const accessToken = req.headers.authorization.split(" ")[1];
+  const paylode = jwt.verify(accessToken, secretKey);
+  const userInfo = users.find((el) => el.user_id === paylode.userId);
+  res.send(userInfo);
+  return res.json(userInfo);
 });
 
 app.listen(3000, () => console.log("서버 실행!"));
